@@ -1,1 +1,21 @@
-
+<!doctype html>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<title>Paws &amp; Pencils</title>
+<body style="background:#f7f1e3">
+<script>
+// Streak carry-over. This page must be served from nebula016.github.io (the game's old address),
+// because that is where older players' saves live. It reads the solved puzzles saved in this
+// browser and sends them to the new site in the link. Nothing is stored or sent anywhere else.
+var SITE='https://pawsandpencils.app/';
+(function(){
+  var back=SITE;
+  try{var b=new URLSearchParams(location.search).get('back');if(b&&b.indexOf(SITE)===0)back=b.split('#')[0];}catch(e){}
+  var out={};
+  try{for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);
+    if(!/^pnp-\d{1,2} [A-Za-z]{3} \d{4}$/.test(k))continue;
+    try{var s=JSON.parse(localStorage.getItem(k));if(s&&s.done)out[k]=s;}catch(e){}}}catch(e){}
+  var n=Object.keys(out).length;
+  location.replace(back+'#pnp-import='+(n?encodeURIComponent(JSON.stringify(out)):'none'));
+})();
+</script>
